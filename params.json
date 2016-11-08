@@ -1,0 +1,6 @@
+{
+  "name": "Altium-designer-tutorial",
+  "tagline": "Altium Designer",
+  "body": "I have drawn a power supply's PCB using Altium.\r\nIf the views is bigger than 100K, we are going to draw a core board.\r\n\r\n[Tutorial Video](https://youtu.be/Det_Jr88dBY)\r\nPCB library (3D): https://youtu.be/Det_Jr88dBY\r\nSchematic Library (Data management) : https://youtu.be/Det_Jr88dBY?t=4162\r\nSchematics drawing: https://youtu.be/Det_Jr88dBY?t=7428\r\nPCB drawing: https://youtu.be/Det_Jr88dBY?t=9315\r\nPDF Print Out: https://youtu.be/Det_Jr88dBY?t=16019\r\nGerber: https://youtu.be/Det_Jr88dBY?t=17279\r\n\r\nIf you have any question, contact me ceceomer@gmail.com",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
