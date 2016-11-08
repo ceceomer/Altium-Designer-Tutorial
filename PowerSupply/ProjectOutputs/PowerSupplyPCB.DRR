@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: PowerSupplyPCB.PcbDoc   23.11.2014  02:40:54
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : PowerSupplyPCB.TXT
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        0.8mm (31.496mil)        Round          6                100.50 mm (3.96 Inch)
+T2        0.9mm (35.433mil)        Round          4                53.59 mm (2.11 Inch)
+T3        1mm (39.37mil)           Round          3                98.18 mm (3.87 Inch)
+T4        1.1mm (43.307mil)        Round          3                12.26 mm (0.48 Inch)
+T5        1.2mm (47.244mil)        Round          8                63.49 mm (2.50 Inch)
+T6        1.5mm (59.055mil)        Round          3                10.00 mm (0.39 Inch)
+T7        2mm (78.74mil)           Round          5                80.14 mm (3.16 Inch)
+T8        3mm (118.11mil)          Round          6                206.57 mm (8.13 Inch)
+---------------------------------------------------------------------------
+Totals                                            38               624.73 mm (24.60 Inch)
+
+Total Processing Time (hh:mm:ss) : 00:00:00

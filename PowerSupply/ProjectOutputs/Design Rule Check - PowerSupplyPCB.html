@@ -1,0 +1,504 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : sans-serif;
+			color : white;
+			background-color : #21489e;
+			padding: 0.3em;
+		}
+		body {
+			font-family : verdana;
+		}
+		td, th {
+			padding: 0.5em;
+			text-align : center;
+			width : 18%;
+		}
+		th {
+			background-color : #A6CAF0;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+		}
+		
+		.DRC_summary_header {							
+			padding-bottom : 0.1em;
+			border : 0px solid black;							
+			width: 100%;
+                        align: right;
+                        
+		}
+
+		.DRC_summary_header_col1, 
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3
+		{
+			color : black;
+			font-size:150%;
+                        padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2: 0em;
+			border : 0px solid black;
+			width : auto;
+			vertical-align: top;
+			font-weight: bold;				
+		}
+		
+		.DRC_summary_header_col1 	
+		{		                       
+			text-align: right;
+                        width: auto;	
+		}
+
+		.DRC_summary_header_col2 	
+		{		
+			text-align: center;	
+		}
+
+		.DRC_summary_header_col3 	
+		{		
+			text-align: left;	
+		}
+
+
+		
+		.header_holder
+		{
+		Width = 100%;
+		border = 0px solid green;
+		padding = 0;
+		}
+		
+		
+		
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+                {
+			left:0;
+			top:0;
+			padding-top : 0.1em;			
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top
+
+		}
+		.front_matter {	
+			
+			margin-top: 5px;
+ 			margin-left: 0px;					 			
+ 			horizontal-align: left;
+		}
+				
+		
+		.front_matter_column1 {
+			width : 10em;	
+			text-align  : right;
+			padding-right:0.1em;
+			
+		}
+		
+		.front_matter_column2 {
+                        width: 0.1em;
+			align: center;
+			text-align : center;
+			margin-right  : 0.1em;	
+			margin-left   : 0.1em;
+		}
+		.front_matter_column3 {
+			width         : auto;  
+			text-align    : left;	
+			margin-right  : 0.5em;				
+		}
+		
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : right;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #EEEEE0 
+		}
+		tr.onmouseout_even { 
+			background-color : #F3F3E3   
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : lightYellow
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #008000 
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\Public\Documents\Altium\AD13\Templates\AD-rgb_logo_223x64.gif
+		"><a href="dxpprocess://Client:SetupPreferences?Server=PCB|PageName=Reports" class="customize"><acronym title="dxpprocess://Client:SetupPreferences?Server=PCB|PageName=Reports">customize</acronym></a><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td Style="width:70%">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">22.11.2014</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">09:47:31</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">00:00:00</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3"><a href="file:///C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc" class="file"><acronym title="C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc">C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td Style="Width:30%">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings</td>
+<td class="DRC_summary_header_col2">:</td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations</td>
+<td class="DRC_summary_header_col2">:</td>
+<td class="DRC_summary_header_col3" style="color : red">42</td></tr>
+</table>
+</td>
+</table>
+<hr><a name="IDRI15WHFVD003MSOYLMK1LMLKL"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDEVBZ1RVD55OFFNCVN0MA5EMKE">Net Antennae (Tolerance=0mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID5KFQQM5RTZKEES3XO2YHK3ISYE">Silk to Silk (Clearance=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDNAB2IROLGPDUEUCKXKM5QST1OI">Silk To Solder Mask (Clearance=0.254mm) (IsPad),(All)</a></td>
+<td class="column2">38</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDKISZJ5UA0ZC3PRUOPEBMHUX50G">Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDCG2JFRLJW03KCEVXANVZMKYYNL">Hole To Hole Clearance (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDLYWJD0LQATVJCV3GWE2QRFZESC">Hole Size Constraint (Min=0.025mm) (Max=2.54mm) (All)</a></td>
+<td class="column2">4</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID1D1KCDIVRXE2L0O1YCKMZXWK0K">Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID2YO5FW0RYR3CLJYBL1RCN0I2SB">Width Constraint (Min=0.254mm) (Max=1000mm) (Preferred=1mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDELYXWXGZDPSFKCICLDLMOKAOYJ">Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDK1JTCQGCIIGBDZW0Z1FMETCAB">Clearance Constraint (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID3W4PQPW3V30CGVDNNRVVB1AFQM">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDGZ4VNDP0H40YNZ0M54QNIEI4WE">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">42</td>
+</tr>
+</table><br><hr><a name="IDNAB2IROLGPDUEUCKXKM5QST1OI"><table>
+<tr>
+<th style="text-align : left" colspan="2" class="rule">Silk To Solder Mask (Clearance=0.254mm) (IsPad),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True">Pad C2--(110.363mm,78.653mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4241.575mil|Location2.X=4448.425mil|Location1.Y=3091.575mil|Location2.Y=3298.425mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4241.575mil|Location2.X=4448.425mil|Location1.Y=3091.575mil|Location2.Y=3298.425mil|Absolute=True">Arc (110.363mm,81.153mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3259.425mil|Location2.Y=3327.425mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3259.425mil|Location2.Y=3327.425mil|Absolute=True">Pad C2-+(110.363mm,83.653mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4241.575mil|Location2.X=4448.425mil|Location1.Y=3091.575mil|Location2.Y=3298.425mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4241.575mil|Location2.X=4448.425mil|Location1.Y=3091.575mil|Location2.Y=3298.425mil|Absolute=True">Arc (110.363mm,81.153mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2409.661mil|Location2.X=2500.339mil|Location1.Y=3054.661mil|Location2.Y=3145.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2409.661mil|Location2.X=2500.339mil|Location1.Y=3054.661mil|Location2.Y=3145.339mil|Absolute=True">Pad D1-+(62.357mm,78.74mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2168.898mil|Location2.X=2541.102mil|Location1.Y=2813.898mil|Location2.Y=3186.102mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2168.898mil|Location2.X=2541.102mil|Location1.Y=2813.898mil|Location2.Y=3186.102mil|Absolute=True">Arc (59.817mm,76.2mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2409.661mil|Location2.X=2500.339mil|Location1.Y=2854.661mil|Location2.Y=2945.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2409.661mil|Location2.X=2500.339mil|Location1.Y=2854.661mil|Location2.Y=2945.339mil|Absolute=True">Pad D1-AC2(62.357mm,73.66mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2168.898mil|Location2.X=2541.102mil|Location1.Y=2813.898mil|Location2.Y=3186.102mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2168.898mil|Location2.X=2541.102mil|Location1.Y=2813.898mil|Location2.Y=3186.102mil|Absolute=True">Arc (59.817mm,76.2mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2209.661mil|Location2.X=2300.339mil|Location1.Y=3054.661mil|Location2.Y=3145.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2209.661mil|Location2.X=2300.339mil|Location1.Y=3054.661mil|Location2.Y=3145.339mil|Absolute=True">Pad D1-AC1(57.277mm,78.74mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2168.898mil|Location2.X=2541.102mil|Location1.Y=2813.898mil|Location2.Y=3186.102mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2168.898mil|Location2.X=2541.102mil|Location1.Y=2813.898mil|Location2.Y=3186.102mil|Absolute=True">Arc (59.817mm,76.2mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2209.661mil|Location2.X=2300.339mil|Location1.Y=2854.661mil|Location2.Y=2945.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2209.661mil|Location2.X=2300.339mil|Location1.Y=2854.661mil|Location2.Y=2945.339mil|Absolute=True">Pad D1--(57.277mm,73.66mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2168.898mil|Location2.X=2541.102mil|Location1.Y=2813.898mil|Location2.Y=3186.102mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2168.898mil|Location2.X=2541.102mil|Location1.Y=2813.898mil|Location2.Y=3186.102mil|Absolute=True">Arc (59.817mm,76.2mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3825.567mil|Location2.X=3904.433mil|Location1.Y=2185.567mil|Location2.Y=2264.433mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3825.567mil|Location2.X=3904.433mil|Location1.Y=2185.567mil|Location2.Y=2264.433mil|Absolute=True">Pad D2-A(98.171mm,56.515mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3761.575mil|Location2.X=3968.425mil|Location1.Y=2071.575mil|Location2.Y=2278.425mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3761.575mil|Location2.X=3968.425mil|Location1.Y=2071.575mil|Location2.Y=2278.425mil|Absolute=True">Arc (98.171mm,55.245mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3825.567mil|Location2.X=3904.433mil|Location1.Y=2085.567mil|Location2.Y=2164.433mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3825.567mil|Location2.X=3904.433mil|Location1.Y=2085.567mil|Location2.Y=2164.433mil|Absolute=True">Pad D2-K(98.171mm,53.975mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3761.575mil|Location2.X=3968.425mil|Location1.Y=2071.575mil|Location2.Y=2278.425mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3761.575mil|Location2.X=3968.425mil|Location1.Y=2071.575mil|Location2.Y=2278.425mil|Absolute=True">Arc (98.171mm,55.245mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4376.063mil|Location2.X=4398.937mil|Location1.Y=3106.063mil|Location2.Y=3113.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4376.063mil|Location2.X=4398.937mil|Location1.Y=3106.063mil|Location2.Y=3113.937mil|Absolute=True">Track (111.252mm,78.994mm)(111.633mm,78.994mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True">Pad C2--(110.363mm,78.653mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4376.063mil|Location2.X=4398.937mil|Location1.Y=3111.063mil|Location2.Y=3118.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4376.063mil|Location2.X=4398.937mil|Location1.Y=3111.063mil|Location2.Y=3118.937mil|Absolute=True">Track (111.252mm,79.121mm)(111.633mm,79.121mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True">Pad C2--(110.363mm,78.653mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4353.563mil|Location2.X=4378.937mil|Location1.Y=3116.063mil|Location2.Y=3141.437mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4353.563mil|Location2.X=4378.937mil|Location1.Y=3116.063mil|Location2.Y=3141.437mil|Absolute=True">Track (110.68mm,79.692mm)(111.125mm,79.248mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True">Pad C2--(110.363mm,78.653mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4371.063mil|Location2.X=4383.937mil|Location1.Y=3111.063mil|Location2.Y=3123.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4371.063mil|Location2.X=4383.937mil|Location1.Y=3111.063mil|Location2.Y=3123.937mil|Absolute=True">Track (111.125mm,79.248mm)(111.252mm,79.121mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True">Pad C2--(110.363mm,78.653mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4373.032mil|Location2.X=4376.968mil|Location1.Y=3118.032mil|Location2.Y=3131.968mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4373.032mil|Location2.X=4376.968mil|Location1.Y=3118.032mil|Location2.Y=3131.968mil|Absolute=True">Track (111.125mm,79.248mm)(111.125mm,79.502mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True">Pad C2--(110.363mm,78.653mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4281.063mil|Location2.X=4323.937mil|Location1.Y=3111.063mil|Location2.Y=3118.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4281.063mil|Location2.X=4323.937mil|Location1.Y=3111.063mil|Location2.Y=3118.937mil|Absolute=True">Track (108.839mm,79.121mm)(109.728mm,79.121mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True">Pad C2--(110.363mm,78.653mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4291.063mil|Location2.X=4323.937mil|Location1.Y=3106.063mil|Location2.Y=3113.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4291.063mil|Location2.X=4323.937mil|Location1.Y=3106.063mil|Location2.Y=3113.937mil|Absolute=True">Track (109.093mm,78.994mm)(109.728mm,78.994mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True">Pad C2--(110.363mm,78.653mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4266.063mil|Location2.X=4428.937mil|Location1.Y=3136.063mil|Location2.Y=3143.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4266.063mil|Location2.X=4428.937mil|Location1.Y=3136.063mil|Location2.Y=3143.937mil|Absolute=True">Track (108.458mm,79.756mm)(112.395mm,79.756mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True">Pad C2--(110.363mm,78.653mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4271.063mil|Location2.X=4423.937mil|Location1.Y=3131.063mil|Location2.Y=3138.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4271.063mil|Location2.X=4423.937mil|Location1.Y=3131.063mil|Location2.Y=3138.937mil|Absolute=True">Track (108.585mm,79.629mm)(112.268mm,79.629mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True">Pad C2--(110.363mm,78.653mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4271.063mil|Location2.X=4418.937mil|Location1.Y=3126.063mil|Location2.Y=3133.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4271.063mil|Location2.X=4418.937mil|Location1.Y=3126.063mil|Location2.Y=3133.937mil|Absolute=True">Track (108.585mm,79.502mm)(112.141mm,79.502mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True">Pad C2--(110.363mm,78.653mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4371.063mil|Location2.X=4413.937mil|Location1.Y=3121.063mil|Location2.Y=3128.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4371.063mil|Location2.X=4413.937mil|Location1.Y=3121.063mil|Location2.Y=3128.937mil|Absolute=True">Track (111.125mm,79.375mm)(112.014mm,79.375mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True">Pad C2--(110.363mm,78.653mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4281.063mil|Location2.X=4323.937mil|Location1.Y=3121.063mil|Location2.Y=3128.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4281.063mil|Location2.X=4323.937mil|Location1.Y=3121.063mil|Location2.Y=3128.937mil|Absolute=True">Track (108.839mm,79.375mm)(109.728mm,79.375mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True">Pad C2--(110.363mm,78.653mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4371.063mil|Location2.X=4413.937mil|Location1.Y=3116.063mil|Location2.Y=3123.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4371.063mil|Location2.X=4413.937mil|Location1.Y=3116.063mil|Location2.Y=3123.937mil|Absolute=True">Track (111.125mm,79.248mm)(112.014mm,79.248mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True">Pad C2--(110.363mm,78.653mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4281.063mil|Location2.X=4323.937mil|Location1.Y=3116.063mil|Location2.Y=3123.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4281.063mil|Location2.X=4323.937mil|Location1.Y=3116.063mil|Location2.Y=3123.937mil|Absolute=True">Track (108.839mm,79.248mm)(109.728mm,79.248mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4311mil|Location2.X=4379mil|Location1.Y=3062.575mil|Location2.Y=3130.575mil|Absolute=True">Pad C2--(110.363mm,78.653mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3296.063mil|Location2.X=3303.937mil|Location1.Y=3491.063mil|Location2.Y=3798.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3296.063mil|Location2.X=3303.937mil|Location1.Y=3491.063mil|Location2.Y=3798.937mil|Absolute=True">Track (83.82mm,88.773mm)(83.82mm,96.393mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3304.661mil|Location2.X=3395.339mil|Location1.Y=3499.661mil|Location2.Y=3590.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3304.661mil|Location2.X=3395.339mil|Location1.Y=3499.661mil|Location2.Y=3590.339mil|Absolute=True">Pad C3-2(85.09mm,90.043mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3396.063mil|Location2.X=3403.937mil|Location1.Y=3491.063mil|Location2.Y=3798.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3396.063mil|Location2.X=3403.937mil|Location1.Y=3491.063mil|Location2.Y=3798.937mil|Absolute=True">Track (86.36mm,88.773mm)(86.36mm,96.393mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3304.661mil|Location2.X=3395.339mil|Location1.Y=3499.661mil|Location2.Y=3590.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3304.661mil|Location2.X=3395.339mil|Location1.Y=3499.661mil|Location2.Y=3590.339mil|Absolute=True">Pad C3-2(85.09mm,90.043mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3296.063mil|Location2.X=3403.937mil|Location1.Y=3491.063mil|Location2.Y=3498.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3296.063mil|Location2.X=3403.937mil|Location1.Y=3491.063mil|Location2.Y=3498.937mil|Absolute=True">Track (83.82mm,88.773mm)(86.36mm,88.773mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3304.661mil|Location2.X=3395.339mil|Location1.Y=3499.661mil|Location2.Y=3590.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3304.661mil|Location2.X=3395.339mil|Location1.Y=3499.661mil|Location2.Y=3590.339mil|Absolute=True">Pad C3-2(85.09mm,90.043mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3296.063mil|Location2.X=3303.937mil|Location1.Y=3491.063mil|Location2.Y=3798.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3296.063mil|Location2.X=3303.937mil|Location1.Y=3491.063mil|Location2.Y=3798.937mil|Absolute=True">Track (83.82mm,88.773mm)(83.82mm,96.393mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3304.661mil|Location2.X=3395.339mil|Location1.Y=3699.661mil|Location2.Y=3790.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3304.661mil|Location2.X=3395.339mil|Location1.Y=3699.661mil|Location2.Y=3790.339mil|Absolute=True">Pad C3-1(85.09mm,95.123mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3396.063mil|Location2.X=3403.937mil|Location1.Y=3491.063mil|Location2.Y=3798.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3396.063mil|Location2.X=3403.937mil|Location1.Y=3491.063mil|Location2.Y=3798.937mil|Absolute=True">Track (86.36mm,88.773mm)(86.36mm,96.393mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3304.661mil|Location2.X=3395.339mil|Location1.Y=3699.661mil|Location2.Y=3790.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3304.661mil|Location2.X=3395.339mil|Location1.Y=3699.661mil|Location2.Y=3790.339mil|Absolute=True">Pad C3-1(85.09mm,95.123mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3296.063mil|Location2.X=3403.937mil|Location1.Y=3791.063mil|Location2.Y=3798.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3296.063mil|Location2.X=3403.937mil|Location1.Y=3791.063mil|Location2.Y=3798.937mil|Absolute=True">Track (83.82mm,96.393mm)(86.36mm,96.393mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3304.661mil|Location2.X=3395.339mil|Location1.Y=3699.661mil|Location2.Y=3790.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3304.661mil|Location2.X=3395.339mil|Location1.Y=3699.661mil|Location2.Y=3790.339mil|Absolute=True">Pad C3-1(85.09mm,95.123mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4126.063mil|Location2.X=4133.937mil|Location1.Y=3226.063mil|Location2.Y=3258.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4126.063mil|Location2.X=4133.937mil|Location1.Y=3226.063mil|Location2.Y=3258.937mil|Absolute=True">Track (104.902mm,82.042mm)(104.902mm,82.677mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4096mil|Location2.X=4164mil|Location1.Y=3256mil|Location2.Y=3324mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4096mil|Location2.X=4164mil|Location1.Y=3256mil|Location2.Y=3324mil|Absolute=True">Pad R1-2(104.902mm,83.566mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4126.063mil|Location2.X=4133.937mil|Location1.Y=3076.063mil|Location2.Y=3108.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4126.063mil|Location2.X=4133.937mil|Location1.Y=3076.063mil|Location2.Y=3108.937mil|Absolute=True">Track (104.902mm,78.232mm)(104.902mm,78.867mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4096mil|Location2.X=4164mil|Location1.Y=3011mil|Location2.Y=3079mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4096mil|Location2.X=4164mil|Location1.Y=3011mil|Location2.Y=3079mil|Absolute=True">Pad R1-1(104.902mm,77.343mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3636.063mil|Location2.X=3668.937mil|Location1.Y=2351.063mil|Location2.Y=2358.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3636.063mil|Location2.X=3668.937mil|Location1.Y=2351.063mil|Location2.Y=2358.937mil|Absolute=True">Track (92.456mm,59.817mm)(93.091mm,59.817mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3666mil|Location2.X=3734mil|Location1.Y=2321mil|Location2.Y=2389mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3666mil|Location2.X=3734mil|Location1.Y=2321mil|Location2.Y=2389mil|Absolute=True">Pad R2-2(93.98mm,59.817mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3486.063mil|Location2.X=3518.937mil|Location1.Y=2351.063mil|Location2.Y=2358.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3486.063mil|Location2.X=3518.937mil|Location1.Y=2351.063mil|Location2.Y=2358.937mil|Absolute=True">Track (88.646mm,59.817mm)(89.281mm,59.817mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3421mil|Location2.X=3489mil|Location1.Y=2321mil|Location2.Y=2389mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3421mil|Location2.X=3489mil|Location1.Y=2321mil|Location2.Y=2389mil|Absolute=True">Pad R2-1(87.757mm,59.817mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3251.063mil|Location2.X=3258.937mil|Location1.Y=2101.063mil|Location2.Y=2408.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3251.063mil|Location2.X=3258.937mil|Location1.Y=2101.063mil|Location2.Y=2408.937mil|Absolute=True">Track (82.677mm,53.467mm)(82.677mm,61.087mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3259.661mil|Location2.X=3350.339mil|Location1.Y=2109.661mil|Location2.Y=2200.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3259.661mil|Location2.X=3350.339mil|Location1.Y=2109.661mil|Location2.Y=2200.339mil|Absolute=True">Pad C1-2(83.947mm,54.737mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3351.063mil|Location2.X=3358.937mil|Location1.Y=2101.063mil|Location2.Y=2408.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3351.063mil|Location2.X=3358.937mil|Location1.Y=2101.063mil|Location2.Y=2408.937mil|Absolute=True">Track (85.217mm,53.467mm)(85.217mm,61.087mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3259.661mil|Location2.X=3350.339mil|Location1.Y=2109.661mil|Location2.Y=2200.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3259.661mil|Location2.X=3350.339mil|Location1.Y=2109.661mil|Location2.Y=2200.339mil|Absolute=True">Pad C1-2(83.947mm,54.737mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3251.063mil|Location2.X=3358.937mil|Location1.Y=2101.063mil|Location2.Y=2108.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3251.063mil|Location2.X=3358.937mil|Location1.Y=2101.063mil|Location2.Y=2108.937mil|Absolute=True">Track (82.677mm,53.467mm)(85.217mm,53.467mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3259.661mil|Location2.X=3350.339mil|Location1.Y=2109.661mil|Location2.Y=2200.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3259.661mil|Location2.X=3350.339mil|Location1.Y=2109.661mil|Location2.Y=2200.339mil|Absolute=True">Pad C1-2(83.947mm,54.737mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3251.063mil|Location2.X=3258.937mil|Location1.Y=2101.063mil|Location2.Y=2408.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3251.063mil|Location2.X=3258.937mil|Location1.Y=2101.063mil|Location2.Y=2408.937mil|Absolute=True">Track (82.677mm,53.467mm)(82.677mm,61.087mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3259.661mil|Location2.X=3350.339mil|Location1.Y=2309.661mil|Location2.Y=2400.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3259.661mil|Location2.X=3350.339mil|Location1.Y=2309.661mil|Location2.Y=2400.339mil|Absolute=True">Pad C1-1(83.947mm,59.817mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3351.063mil|Location2.X=3358.937mil|Location1.Y=2101.063mil|Location2.Y=2408.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3351.063mil|Location2.X=3358.937mil|Location1.Y=2101.063mil|Location2.Y=2408.937mil|Absolute=True">Track (85.217mm,53.467mm)(85.217mm,61.087mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3259.661mil|Location2.X=3350.339mil|Location1.Y=2309.661mil|Location2.Y=2400.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3259.661mil|Location2.X=3350.339mil|Location1.Y=2309.661mil|Location2.Y=2400.339mil|Absolute=True">Pad C1-1(83.947mm,59.817mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3251.063mil|Location2.X=3358.937mil|Location1.Y=2401.063mil|Location2.Y=2408.937mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3251.063mil|Location2.X=3358.937mil|Location1.Y=2401.063mil|Location2.Y=2408.937mil|Absolute=True">Track (82.677mm,61.087mm)(85.217mm,61.087mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3259.661mil|Location2.X=3350.339mil|Location1.Y=2309.661mil|Location2.Y=2400.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3259.661mil|Location2.X=3350.339mil|Location1.Y=2309.661mil|Location2.Y=2400.339mil|Absolute=True">Pad C1-1(83.947mm,59.817mm)  Multi-Layer</acronym></a></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><a name="IDLYWJD0LQATVJCV3GWE2QRFZESC"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Hole Size Constraint (Min=0.025mm) (Max=2.54mm) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5452.131mil|Location2.X=5571.491mil|Location1.Y=2302.525mil|Location2.Y=2421.885mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5452.131mil|Location2.X=5571.491mil|Location1.Y=2302.525mil|Location2.Y=2421.885mil|Absolute=True">Hole Size Constraint (3mm &gt; 2.54mm) : Pad Free-3(140mm,60mm)  Multi-Layer</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5452.131mil|Location2.X=5571.491mil|Location1.Y=3483.627mil|Location2.Y=3602.987mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5452.131mil|Location2.X=5571.491mil|Location1.Y=3483.627mil|Location2.Y=3602.987mil|Absolute=True">Hole Size Constraint (3mm &gt; 2.54mm) : Pad Free-2(140mm,90mm)  Multi-Layer</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2302.525mil|Location2.X=2421.885mil|Location1.Y=2302.525mil|Location2.Y=2421.885mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2302.525mil|Location2.X=2421.885mil|Location1.Y=2302.525mil|Location2.Y=2421.885mil|Absolute=True">Hole Size Constraint (3mm &gt; 2.54mm) : Pad Free-1(60mm,60mm)  Multi-Layer</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\%C3%96mer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2302.525mil|Location2.X=2421.885mil|Location1.Y=3483.627mil|Location2.Y=3602.987mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Ömer\Desktop\PowerSupply\PowerSupplyPCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2302.525mil|Location2.X=2421.885mil|Location1.Y=3483.627mil|Location2.Y=3602.987mil|Absolute=True">Hole Size Constraint (3mm &gt; 2.54mm) : Pad Free-0(60mm,90mm)  Multi-Layer</acronym></a><br></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br></body>
+</html>

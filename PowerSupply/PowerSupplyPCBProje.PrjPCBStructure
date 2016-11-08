@@ -1,0 +1,4 @@
+Record=SheetSymbol|SourceDocument=Main.SchDoc|Designator=7805|SchDesignator=7805|FileName=7805.SchDoc|SymbolType=Normal|RawFileName=7805.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=Main.SchDoc|Designator=Led|SchDesignator=Led|FileName=Led.SchDoc|SymbolType=Normal|RawFileName=Led.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=Main.SchDoc|Designator=LM317|SchDesignator=LM317|FileName=LM317.SchDoc|SymbolType=Normal|RawFileName=LM317.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=TopLevelDocument|FileName=Main.SchDoc
